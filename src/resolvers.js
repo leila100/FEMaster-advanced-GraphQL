@@ -1,4 +1,8 @@
 const { authenticated, authorized } = require("./auth");
+const { PubSub } = require("apollo-server");
+
+const pubSub = new PubSub();
+
 const NEW_POST = "NEW_POST";
 
 /**
@@ -34,7 +38,7 @@ module.exports = {
 
     createPost: authenticated((_, { input }, { user, models }) => {
       const post = models.Post.createOne({ ...input, author: user.id });
-      pubsub.publish(NEW_POST, { newPost: post });
+      pubSub.publish(NEW_POST, { newPost: post });
       return post;
     }),
 
@@ -68,6 +72,12 @@ module.exports = {
 
       const token = createToken(user);
       return { token, user };
+    },
+  },
+
+  Subscription: {
+    newPost: {
+      subscribe: () => pubSub.asyncIterator(NEW_POST),
     },
   },
 
