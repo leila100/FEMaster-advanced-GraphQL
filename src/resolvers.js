@@ -42,9 +42,11 @@ module.exports = {
       return models.User.updateOne({ id: user.id }, input);
     }),
     // admin role
-    invite: authenticated((_, { input }, { user }) => {
-      return { from: user.id, role: input.role, createdAt: Date.now(), email: input.email };
-    }),
+    invite: authenticated(
+      authorized("ADMIN", (_, { input }, { user }) => {
+        return { from: user, role: input.role, createdAt: Date.now(), email: input.email };
+      })
+    ),
 
     signup(_, { input }, { models, createToken }) {
       const existing = models.User.findOne({ email: input.email });
