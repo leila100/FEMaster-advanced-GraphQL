@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mutations create post 1`] = `
+Object {
+  "data": Object {
+    "createPost": Object {
+      "createdAt": "12345839",
+      "id": "1",
+      "likes": 20,
+      "message": "This is a message",
+      "views": 300,
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
