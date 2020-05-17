@@ -12,10 +12,10 @@ module.exports = gql`
     GUEST
   }
 
-  directive @log on FIELD_DEFINITION
+  directive @log(message: String = "My message") on FIELD_DEFINITION
 
   type User {
-    id: ID! @log
+    id: ID! @log(message: "It works!!!")
     email: String!
     avatar: String!
     verified: Boolean!
