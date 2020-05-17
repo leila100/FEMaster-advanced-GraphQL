@@ -1,5 +1,5 @@
 const { authenticated, authorized } = require("./auth");
-const { PubSub } = require("apollo-server");
+const { PubSub, AuthenticationError } = require("apollo-server");
 
 const pubSub = new PubSub();
 

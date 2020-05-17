@@ -1,3 +1,4 @@
+const { AuthenticationError } = require("apollo-server");
 const jwt = require("jsonwebtoken");
 const { models } = require("./db");
 const secret = "catpack";
