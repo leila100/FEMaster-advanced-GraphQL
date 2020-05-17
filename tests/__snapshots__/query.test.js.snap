@@ -22,3 +22,33 @@ Object {
   },
 }
 `;
+
+exports[`queries posts 1`] = `
+Object {
+  "data": Object {
+    "posts": Array [
+      Object {
+        "createdAt": "1589652763001",
+        "id": "E1y84ywOMrh9Lw4UgBkUz",
+        "likes": 80,
+        "message": "Another message again",
+        "views": 100,
+      },
+      Object {
+        "createdAt": "1589652737837",
+        "id": "EYRxCSpmvLHGnbuvYIsoL",
+        "likes": 20,
+        "message": "Another message",
+        "views": 300,
+      },
+    ],
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
