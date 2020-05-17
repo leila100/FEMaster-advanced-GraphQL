@@ -1,12 +1,26 @@
-const { ApolloServer } = require("apollo-server");
+const { ApolloServer, SchemaDirectiveVisitor } = require("apollo-server");
+const { defaultFieldResolver } = require("graphql");
 const typeDefs = require("./typedefs");
 const resolvers = require("./resolvers");
 const { createToken, getUserFromToken } = require("./auth");
 const db = require("./db");
 
+class LogDirective extends SchemaDirectiveVisitor {
+  visitFieldDefinition(field) {
+    const resolver = field.resolve || defaultFieldResolver;
+    field.resolve = (args) => {
+      console.log("✨ Hi");
+      return resolver.apply(this, args);
+    };
+  }
+}
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  schemaDirectives: {
+    log: LogDirective,
+  },
   context({ req, connection }) {
     const context = { ...db };
     if (connection) return { context, ...connection.context };
