@@ -1,5 +1,5 @@
 const { ApolloServer, SchemaDirectiveVisitor } = require("apollo-server");
-const { defaultFieldResolver } = require("graphql");
+const { defaultFieldResolver, GraphQLString } = require("graphql");
 const typeDefs = require("./typedefs");
 const resolvers = require("./resolvers");
 const { createToken, getUserFromToken } = require("./auth");
@@ -9,7 +9,7 @@ class LogDirective extends SchemaDirectiveVisitor {
   visitFieldDefinition(field) {
     const resolver = field.resolve || defaultFieldResolver;
     const { message } = this.args;
-    field.resolve = (args) => {
+    field.resolve = (...args) => {
       console.log(`✨ Hi -- ${message}`);
       return resolver.apply(this, args);
     };
