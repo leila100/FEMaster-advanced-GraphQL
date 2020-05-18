@@ -4,29 +4,14 @@ const typeDefs = require("./typedefs");
 const resolvers = require("./resolvers");
 const { createToken, getUserFromToken } = require("./auth");
 const db = require("./db");
-
-class LogDirective extends SchemaDirectiveVisitor {
-  visitFieldDefinition(field) {
-    const resolver = field.resolve || defaultFieldResolver;
-    field.args.push({
-      type: GraphQLString,
-      name: "message",
-    });
-    field.resolve = (root, { message, ...rest }, ctx, info) => {
-      const { message: schemaMessage } = this.args;
-      // message comes from the args @log(message: ---)
-      // schemaMessage comes from the query id(message: ---)
-      console.log(`✨ Hi -- ${message || schemaMessage}`);
-      return resolver.call(this, root, rest, ctx, info);
-    };
-  }
-}
+const { LogDirective, FormatDateDirective } = require("./directives");
 
 const server = new ApolloServer({
   typeDefs,
   resolvers,
   schemaDirectives: {
     log: LogDirective,
+    formatDate: FormatDateDirective,
   },
   context({ req, connection }) {
     const context = { ...db };

@@ -14,6 +14,8 @@ module.exports = gql`
 
   directive @log(message: String = "My message") on FIELD_DEFINITION
 
+  directive @formatDate(format: String = "dd MMM yyy") on FIELD_DEFINITION
+
   type User {
     id: ID! @log(message: "It works!!!")
     email: String!
@@ -34,7 +36,7 @@ module.exports = gql`
     id: ID!
     message: String!
     author: User!
-    createdAt: String!
+    createdAt: String! @formatDate
     likes: Int!
     views: Int!
   }
