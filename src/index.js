@@ -14,6 +14,8 @@ class LogDirective extends SchemaDirectiveVisitor {
     });
     field.resolve = (root, { message, ...rest }, ctx, info) => {
       const { message: schemaMessage } = this.args;
+      // message comes from the args @log(message: ---)
+      // schemaMessage comes from the query id(message: ---)
       console.log(`✨ Hi -- ${message || schemaMessage}`);
       return resolver.call(this, root, rest, ctx, info);
     };
