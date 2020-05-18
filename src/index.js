@@ -8,10 +8,14 @@ const db = require("./db");
 class LogDirective extends SchemaDirectiveVisitor {
   visitFieldDefinition(field) {
     const resolver = field.resolve || defaultFieldResolver;
-    const { message } = this.args;
-    field.resolve = (...args) => {
-      console.log(`✨ Hi -- ${message}`);
-      return resolver.apply(this, args);
+    field.args.push({
+      type: GraphQLString,
+      name: "message",
+    });
+    field.resolve = (root, { message, ...rest }, ctx, info) => {
+      const { message: schemaMessage } = this.args;
+      console.log(`✨ Hi -- ${message || schemaMessage}`);
+      return resolver.call(this, root, rest, ctx, info);
     };
   }
 }
