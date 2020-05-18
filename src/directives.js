@@ -22,10 +22,14 @@ class LogDirective extends SchemaDirectiveVisitor {
 class FormatDateDirective extends SchemaDirectiveVisitor {
   visitFieldDefinition(field) {
     const resolver = field.resolve || defaultFieldResolver;
-    const { format } = this.args;
-    field.resolve = async (...args) => {
-      const result = await resolver.apply(this, args);
-      return formatDate(result, format);
+    field.args.push({
+      type: GraphQLString,
+      name: "format",
+    });
+    field.resolve = async (root, { format, ...rest }, ctx, info) => {
+      const { format: schemaFormat } = this.args;
+      const result = await resolver.call(this, root, rest, ctx, info);
+      return formatDate(result, format || schemaFormat);
     };
     field.type = GraphQLString;
   }

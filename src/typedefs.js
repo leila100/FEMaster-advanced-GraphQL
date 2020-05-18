@@ -16,12 +16,14 @@ module.exports = gql`
 
   directive @formatDate(format: String = "dd MMM yyy") on FIELD_DEFINITION
 
+  directive @authDirective on FIELD_DEFINITION
+
   type User {
     id: ID! @log(message: "It works!!!")
     email: String!
     avatar: String!
     verified: Boolean!
-    createdAt: String! @formatDate
+    createdAt: String! @formatDate(format: "d/M/yyyy")
     posts: [Post]!
     role: Role!
     settings: Settings!
