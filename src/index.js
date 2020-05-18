@@ -11,8 +11,8 @@ const server = new ApolloServer({
   schemaDirectives: {
     log: LogDirective,
     formatDate: FormatDateDirective,
-    authentication: AuthenticationDirective,
-    authorization: AuthorizationDirective,
+    authenticated: AuthenticationDirective,
+    authorized: AuthorizationDirective,
   },
   context({ req, connection }) {
     const context = { ...db };

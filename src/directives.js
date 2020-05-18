@@ -49,6 +49,7 @@ class AuthorizationDirective extends SchemaDirectiveVisitor {
   visitFieldDefinition(field) {
     const resolver = field.resolve || defaultFieldResolver;
     const { role } = this.args;
+    console.log("role: ", role);
     field.resolve = async (root, args, ctx, info) => {
       if (ctx.user.role !== role) throw new AuthenticationError("You are not authorized");
       return resolver(root, args, ctx, info);
