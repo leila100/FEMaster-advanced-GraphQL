@@ -21,7 +21,7 @@ module.exports = gql`
     email: String!
     avatar: String!
     verified: Boolean!
-    createdAt: String!
+    createdAt: String! @formatDate
     posts: [Post]!
     role: Role!
     settings: Settings!
@@ -52,7 +52,7 @@ module.exports = gql`
   type Invite {
     email: String!
     from: User!
-    createdAt: String!
+    createdAt: String! @formatDate
     role: Role!
   }
 
