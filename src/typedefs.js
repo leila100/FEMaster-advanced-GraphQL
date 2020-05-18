@@ -16,7 +16,9 @@ module.exports = gql`
 
   directive @formatDate(format: String = "dd MMM yyy") on FIELD_DEFINITION
 
-  directive @authenticationDirective on FIELD_DEFINITION
+  directive @authentication on FIELD_DEFINITION
+
+  directive @authorization on FIELD_DEFINITION
 
   type User {
     id: ID! @log(message: "It works!!!")

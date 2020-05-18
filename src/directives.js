@@ -44,4 +44,16 @@ class AuthenticationDirective extends SchemaDirectiveVisitor {
     };
   }
 }
-module.exports = { LogDirective, FormatDateDirective };
+
+class AuthorizationDirective extends SchemaDirectiveVisitor {
+  visitFieldDefinition(field) {
+    const resolver = field.resolve || defaultFieldResolver;
+    const { role } = this.args;
+    field.resolve = async (root, args, ctx, info) => {
+      if (ctx.user.role !== role) throw new AuthenticationError("You are not authorized");
+      return resolver(root, args, ctx, info);
+    };
+  }
+}
+
+module.exports = { LogDirective, FormatDateDirective, AuthenticationDirective, AuthorizationDirective };
